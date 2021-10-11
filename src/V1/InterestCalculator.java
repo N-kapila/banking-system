@@ -10,4 +10,11 @@ public class InterestCalculator {
         interest= accountBalance*0.12;
         System.out.println("Your annual interest is:"+ currency.format(interest));
     }
+
+    public double getInterest() {
+        return interest;
+    }
+    public void setInterest(double accountBalance){
+        interest=accountBalance*0.12;
+    }
 }

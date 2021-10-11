@@ -14,8 +14,12 @@ public class Main {
         Person person = new Person(name);
         person.generateAccountNumber();
 
+        // account
         Account account= new Account(person.accountNumber, person.name);
-
+        // transaction finder
+        TransactionFinder transactionFinder = new TransactionFinder();
+        // interest calculator
+        InterestCalculator interestCalculator= new InterestCalculator();
        boolean action = true;
        while (action){
            System.out.println("**************************************");
@@ -29,11 +33,13 @@ public class Main {
            System.out.println("Select from the menu:");
            int actionNumber = scanner.nextInt();
            System.out.println("**************************************");
+           interestCalculator.setInterest(account.getAccountBalance());
            switch (actionNumber){
                //check account balance
                case 1:
                    AccountBalanceChecker accountBalanceChecker = new AccountBalanceChecker(account.getAccountBalance());
                    accountBalanceChecker.chekAccountBalance();
+                   transactionFinder.setTransaction("1.Check account balance");
                    break;
                    // make a deposit
                case 2:
@@ -42,6 +48,7 @@ public class Main {
                    Depositor depositor =new Depositor(depositAmount);
                    account.setAccountBalance(depositor.depositMoney(account.getAccountBalance()));
                    System.out.println(account.getAccountBalance());
+                   transactionFinder.setTransaction("2.Make deposit");
                    break;
                    //make withdraw
                case 3:
@@ -49,22 +56,31 @@ public class Main {
                    double withdrawAmount = scanner.nextDouble();
                    WithdrawalFactory withdrawalFactory = new WithdrawalFactory(withdrawAmount);
                    account.setAccountBalance(withdrawalFactory.withdrawMoney(account.getAccountBalance()));
+                   transactionFinder.setTransaction("3.Make withdraw");
                    break;
                    // calculate interest
                case 4:
-                    InterestCalculator interestCalculator= new InterestCalculator();
+
                     interestCalculator.calculateInterest(account.getAccountBalance());
-                    // print statement
+                   transactionFinder.setTransaction("4.Calculate interest");
+                   break;
+
+                   // print statement
                case 5:
                     StatementPrint statementPrint= new StatementPrint();
-                    statementPrint.printStatement(account.accountNumber,account.accountBalance);
+                    statementPrint.printStatement(account.accountNumber,account.accountBalance, transactionFinder.transaction, interestCalculator.getInterest());
+                   transactionFinder.setTransaction("5.Print statement");
+                   break;
+                    // previous transaction
+               case 6:
+                   transactionFinder.printPreviousTransaction();
                     break;
-
-
                case 7:
                    action= false;
                    System.out.println("Thanks for banking with us...!");
                    break;
+               default:
+                   System.out.println("Please enter number 1-7");
 
            }
        }
