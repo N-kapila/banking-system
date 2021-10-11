@@ -50,6 +50,16 @@ public class Main {
                    WithdrawalFactory withdrawalFactory = new WithdrawalFactory(withdrawAmount);
                    account.setAccountBalance(withdrawalFactory.withdrawMoney(account.getAccountBalance()));
                    break;
+                   // calculate interest
+               case 4:
+                    InterestCalculator interestCalculator= new InterestCalculator();
+                    interestCalculator.calculateInterest(account.getAccountBalance());
+                    // print statement
+               case 5:
+                    StatementPrint statementPrint= new StatementPrint();
+                    statementPrint.printStatement(account.accountNumber,account.accountBalance);
+                    break;
+
 
                case 7:
                    action= false;
